@@ -6,6 +6,7 @@ use App\Http\Controllers\NavBaritemController;
 use App\Http\Controllers\SummaryCardController;
 use App\Http\Controllers\CarouselBoardController;
 
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,14 @@ Route::get('/navbaritems', [NavBaritemController::class, 'NavBaritems']);
 Route::get('/SummaryCards', [SummaryCardController::class, 'SummaryCard']);
 Route::get('/CarouselBoard', [CarouselBoardController::class, 'CarouselBoard']);
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+});
